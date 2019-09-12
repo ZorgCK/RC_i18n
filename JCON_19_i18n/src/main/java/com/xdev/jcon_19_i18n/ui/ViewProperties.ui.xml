@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xml>
+<?xdevuiml version="1.0"?>
+<?template BROWSER_XGA?>
+<?import com.vaadin.flow.component.button.Button?>
+<?import com.vaadin.flow.component.grid.Grid?>
+<?import com.vaadin.flow.component.orderedlayout.HorizontalLayout?>
+<?import com.vaadin.flow.component.orderedlayout.VerticalLayout?>
+<?import com.vaadin.flow.component.splitlayout.SplitLayout?>
+<?import com.xdev.jcon_19_i18n.model.Category?>
+<?import com.xdev.jcon_19_i18n.model.Product?>
+<?import com.xdev.jcon_19_i18n.ui.MainContainer?>
+<VerticalLayout xmlns:x="http://xml.xdev-software.com/xdevuiml" x:routeLayout="MainContainer" spacing="false" x:name="ViewProperties" padding="false" x:route="properties">
+    <x:constraints zpos="0" width="100%" height="100%" />
+    <HorizontalLayout x:name="horizontalLayout" padding="true">
+        <x:constraints width="100%" alignment="STRETCH" height="-1px" flex-grow="0.0" />
+        <Button x:name="button2" text="Create Categories">
+            <x:constraints width="0px" alignment="START" height="0px" flex-grow="0.0" />
+            <x:event>click.onComponentEvent</x:event>
+        </Button>
+        <Button x:name="button" text="Create Products">
+            <x:constraints width="0px" alignment="START" height="0px" flex-grow="0.0" />
+            <x:event>click.onComponentEvent</x:event>
+        </Button>
+        <Button x:name="button3" text="Create Resources">
+            <x:constraints width="0px" height="0px" flex-grow="0.0" />
+            <x:event>click.onComponentEvent</x:event>
+        </Button>
+    </HorizontalLayout>
+    <SplitLayout x:splitterPosition="30.0" x:name="splitLayout">
+        <x:constraints width="100%" height="100%" flex-grow="1.0" />
+        <VerticalLayout x:name="verticalLayout">
+            <x:constraints splitlayout-position="PRIMARY" width="100%" height="100%" />
+            <Grid x:name="grid">
+                <x:typeArguments>
+                    <typeArgument type="Category" />
+                </x:typeArguments>
+                <x:constraints width="100%" height="100%" flex-grow="1.0" />
+                <x:columns>
+                    <column property="categoryID" sortable="true" />
+                    <column property="defaultName" sortable="true" />
+                </x:columns>
+                <x:event>selection.selectionChange</x:event>
+            </Grid>
+        </VerticalLayout>
+        <VerticalLayout x:name="verticalLayout2">
+            <x:constraints splitlayout-position="SECONDARY" width="100%" height="100%" />
+            <Grid x:name="grid2">
+                <x:typeArguments>
+                    <typeArgument type="Product" />
+                </x:typeArguments>
+                <x:constraints width="100%" height="100%" flex-grow="1.0" />
+                <x:columns>
+                    <column property="productID" sortable="true" />
+                    <column property="productName" sortable="true" />
+                    <column property="amount" sortable="true" />
+                    <column property="manufacturer" sortable="true" />
+                    <column property="lastAccess" sortable="true" />
+                </x:columns>
+            </Grid>
+        </VerticalLayout>
+    </SplitLayout>
+</VerticalLayout>

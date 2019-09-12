@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xml>
+<?xdevuiml version="1.0"?>
+<?template BROWSER_XGA?>
+<?import com.vaadin.flow.component.combobox.ComboBox?>
+<?import com.vaadin.flow.component.datepicker.DatePicker?>
+<?import com.vaadin.flow.component.formlayout.FormLayout?>
+<?import com.vaadin.flow.component.formlayout.FormLayout.FormItem?>
+<?import com.vaadin.flow.component.grid.Grid?>
+<?import com.vaadin.flow.component.html.Label?>
+<?import com.vaadin.flow.component.orderedlayout.VerticalLayout?>
+<?import com.vaadin.flow.component.splitlayout.SplitLayout?>
+<?import com.vaadin.flow.component.textfield.NumberField?>
+<?import com.vaadin.flow.component.textfield.TextField?>
+<?import com.vaadin.flow.data.binder.Binder?>
+<?import com.xdev.jcon_19_i18n.model.Category?>
+<?import com.xdev.jcon_19_i18n.model.Product?>
+<?import com.xdev.jcon_19_i18n.ui.MainContainer?>
+<VerticalLayout xmlns:x="http://xml.xdev-software.com/xdevuiml" x:routeLayout="MainContainer" className="my-view my-view3" x:name="ViewProducts" justifyContentMode="com.vaadin.flow.component.orderedlayout.FlexComponent.JustifyContentMode.CENTER" padding="false" alignItems="com.vaadin.flow.component.orderedlayout.FlexComponent.Alignment.CENTER" defaultHorizontalComponentAlignment="com.vaadin.flow.component.orderedlayout.FlexComponent.Alignment.CENTER" x:route="products">
+    <x:constraints zpos="0" width="100%" height="100%" />
+    <SplitLayout x:splitterPosition="60.0" x:name="splitLayout">
+        <x:constraints width="100%" height="100%" flex-grow="1.0" />
+        <VerticalLayout x:name="verticalLayout2">
+            <x:constraints splitlayout-position="PRIMARY" width="100%" height="100%" />
+            <Grid x:name="grid">
+                <x:typeArguments>
+                    <typeArgument type="Product" />
+                </x:typeArguments>
+                <x:constraints width="100%" height="100%" flex-grow="1.0" />
+                <x:columns>
+                    <column property="productID" sortable="true" />
+                    <column property="productName" sortable="true" />
+                    <column property="category.localizedValue" sortable="true" />
+                    <column property="manufacturer" sortable="true" />
+                    <column property="lastAccess" sortable="true">
+                        <renderer type="LocalDateTimeRenderer" nullRepresentation="---">
+                            <dateTimeFormatter zone="default" format="LocalizedDateTime" timeFormatStyle="SHORT" dateFormatStyle="SHORT" locale="default" />
+                        </renderer>
+                    </column>
+                    <column property="amount" sortable="true" />
+                </x:columns>
+                <x:event>selection.selectionChange</x:event>
+            </Grid>
+        </VerticalLayout>
+        <VerticalLayout x:name="verticalLayout">
+            <x:constraints splitlayout-position="SECONDARY" width="100%" height="100%" />
+            <FormLayout x:name="form">
+                <x:responsiveSteps>
+                    <entry minWidth="0px" columns="1" labelsPosition="TOP" />
+                    <entry minWidth="500px" columns="2" labelsPosition="TOP" />
+                    <entry minWidth="1000px" columns="3" labelsPosition="ASIDE" />
+                </x:responsiveSteps>
+                <x:constraints width="0px" height="0px" flex-grow="0.0" />
+                <FormItem x:name="formItem">
+                    <x:constraints width="0px" height="0px" />
+                    <Label x:name="lblProductID" text="{$attribute.productID}">
+                        <x:constraints width="0px" label="true" height="0px" />
+                    </Label>
+                    <TextField tabIndex="1" x:name="txtProductID">
+                        <x:constraints width="100%" height="0px" />
+                    </TextField>
+                </FormItem>
+                <FormItem x:name="formItem2">
+                    <x:constraints width="0px" height="0px" />
+                    <Label x:name="lblProductName" text="{$attribute.productname}">
+                        <x:constraints width="0px" label="true" height="0px" />
+                    </Label>
+                    <TextField tabIndex="2" x:name="txtProductName">
+                        <x:constraints width="100%" height="0px" />
+                    </TextField>
+                </FormItem>
+                <FormItem x:name="formItem3">
+                    <x:constraints width="0px" height="0px" />
+                    <Label x:name="lblManufacturer" text="{$attribute.manufacturer}">
+                        <x:constraints width="0px" label="true" height="0px" />
+                    </Label>
+                    <TextField tabIndex="3" x:name="txtManufacturer">
+                        <x:constraints width="100%" height="0px" />
+                    </TextField>
+                </FormItem>
+                <FormItem x:name="formItem4">
+                    <x:constraints width="0px" height="0px" />
+                    <Label x:name="lblCategory" text="{$attribute.category}">
+                        <x:constraints width="0px" label="true" height="0px" />
+                    </Label>
+                    <ComboBox tabIndex="4" x:name="cmbCategory">
+                        <x:typeArguments>
+                            <typeArgument type="Category" />
+                        </x:typeArguments>
+                        <x:constraints width="100%" height="0px" />
+                    </ComboBox>
+                </FormItem>
+                <FormItem x:name="formItem5">
+                    <x:constraints width="0px" height="0px" />
+                    <Label x:name="lblAmount" text="{$attribute.amount}">
+                        <x:constraints width="0px" label="true" height="0px" />
+                    </Label>
+                    <NumberField tabIndex="5" x:name="nrAmount">
+                        <x:constraints width="100%" height="0px" />
+                    </NumberField>
+                </FormItem>
+                <FormItem x:name="formItem6">
+                    <x:constraints width="0px" height="0px" />
+                    <Label x:name="lblLastAccess" text="{$attribute.lastAccess}">
+                        <x:constraints width="0px" label="true" height="0px" />
+                    </Label>
+                    <DatePicker tabIndex="6" x:name="dateLastAccess">
+                        <x:constraints width="100%" height="0px" />
+                    </DatePicker>
+                </FormItem>
+                <Binder x:name="binder">
+                    <x:typeArguments>
+                        <typeArgument type="Product" />
+                    </x:typeArguments>
+                    <x:bindings>
+                        <binding field="txtProductID" property="productID" required="false" nullRepresentation="" readOnly="false">
+                            <validator type="Bean" />
+                        </binding>
+                        <binding field="txtProductName" property="productName" required="false" nullRepresentation="" readOnly="false">
+                            <validator type="Bean" />
+                        </binding>
+                        <binding field="txtManufacturer" property="manufacturer" required="false" nullRepresentation="" readOnly="false">
+                            <validator type="Bean" />
+                        </binding>
+                        <binding field="cmbCategory" property="category" required="false" readOnly="false">
+                            <validator type="Bean" />
+                        </binding>
+                        <binding field="nrAmount" property="amount" required="false" readOnly="false">
+                            <validator type="Bean" />
+                            <converter TYPE="DoubleToBigDecimal" />
+                        </binding>
+                        <binding field="dateLastAccess" property="lastAccess" required="false" nullRepresentation="2019-09-10" readOnly="false">
+                            <validator type="Bean" />
+                            <converter TYPE="LocalDateToLocalDateTime" />
+                        </binding>
+                    </x:bindings>
+                </Binder>
+            </FormLayout>
+        </VerticalLayout>
+    </SplitLayout>
+</VerticalLayout>
