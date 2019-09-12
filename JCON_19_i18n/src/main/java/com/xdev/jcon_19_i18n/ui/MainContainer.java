@@ -8,6 +8,7 @@ import com.flowingcode.vaadin.addons.ironicons.EditorIcons;
 import com.flowingcode.vaadin.addons.ironicons.FileIcons;
 import com.flowingcode.vaadin.addons.ironicons.IronIcons;
 import com.flowingcode.vaadin.addons.ironicons.MapsIcons;
+import com.rapidclipse.framework.server.navigation.Navigation;
 import com.rapidclipse.framework.server.resources.CaptionUtils;
 import com.rapidclipse.framework.server.resources.StringResourceUtils;
 import com.rapidclipse.framework.server.ui.ItemLabelGeneratorFactory;
@@ -116,7 +117,7 @@ public class MainContainer extends VerticalLayout implements PageConfigurator, R
 	 */
 	private void btnView3_onClick(final ClickEvent<Button> event)
 	{
-
+		Navigation.To(ViewManuallyI18N.class).navigate();
 	}
 
 	/**
@@ -146,7 +147,8 @@ public class MainContainer extends VerticalLayout implements PageConfigurator, R
 	 * @eventHandlerDelegate Do NOT delete, used by UI designer!
 	 */
 	private void btnView_onClick(final ClickEvent<Button> event)
-	{ // UI.getCurrent().navigate("view3");
+	{
+		Navigation.To(ViewTimezones.class).navigate();
 	}
 	
 	/**
