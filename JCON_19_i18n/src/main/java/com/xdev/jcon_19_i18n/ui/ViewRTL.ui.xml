@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xml>
+<?xdevuiml version="1.0"?>
+<?template BROWSER_XGA?>
+<?import com.vaadin.flow.component.button.Button?>
+<?import com.vaadin.flow.component.details.Details?>
+<?import com.vaadin.flow.component.html.Label?>
+<?import com.vaadin.flow.component.orderedlayout.HorizontalLayout?>
+<?import com.vaadin.flow.component.orderedlayout.VerticalLayout?>
+<?import com.vaadin.flow.component.splitlayout.SplitLayout?>
+<?import com.vaadin.flow.component.textfield.TextField?>
+<?import com.xdev.jcon_19_i18n.ui.MainContainer?>
+<VerticalLayout xmlns:x="http://xml.xdev-software.com/xdevuiml" x:routeLayout="MainContainer" x:name="ViewRTL" x:route="viewRTL">
+    <x:constraints zpos="0" width="100%" height="100%" />
+    <HorizontalLayout x:name="horizontalLayout">
+        <x:constraints width="100%" height="-1px" flex-grow="0.0" />
+        <Button x:name="button" text="RTL aktivieren">
+            <x:constraints width="0px" height="0px" flex-grow="0.0" />
+            <x:event>click.onComponentEvent</x:event>
+        </Button>
+        <Button x:name="button2" text="RTL deaktivieren">
+            <x:constraints width="0px" height="0px" flex-grow="0.0" />
+            <x:event>click.onComponentEvent</x:event>
+        </Button>
+    </HorizontalLayout>
+    <TextField x:name="textField">
+        <x:constraints width="0px" height="0px" flex-grow="0.0" />
+    </TextField>
+    <Label x:name="label" text="Ich bin ein Text, von Rechts nach Links geschrieben">
+        <x:constraints width="0px" height="0px" flex-grow="0.0" />
+    </Label>
+    <SplitLayout x:splitterPosition="20.0" x:name="splitLayout">
+        <x:constraints width="100%" height="100%" flex-grow="1.0" />
+        <VerticalLayout x:name="verticalLayout">
+            <x:constraints splitlayout-position="PRIMARY" width="100%" height="100%" />
+            <Details x:name="details" summaryText="Detail 1" opened="true">
+                <x:constraints width="100px" alignment="STRETCH" height="100px" flex-grow="0.0" />
+            </Details>
+        </VerticalLayout>
+        <VerticalLayout x:name="verticalLayout2">
+            <x:constraints splitlayout-position="SECONDARY" width="100%" height="100%" />
+        </VerticalLayout>
+    </SplitLayout>
+</VerticalLayout>

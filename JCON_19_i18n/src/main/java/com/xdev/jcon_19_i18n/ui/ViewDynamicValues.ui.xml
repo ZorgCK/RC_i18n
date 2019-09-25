@@ -16,7 +16,7 @@
 <?import com.xdev.jcon_19_i18n.model.Category?>
 <?import com.xdev.jcon_19_i18n.model.Product?>
 <?import com.xdev.jcon_19_i18n.ui.MainContainer?>
-<VerticalLayout xmlns:x="http://xml.xdev-software.com/xdevuiml" x:routeLayout="MainContainer" className="my-view my-view3" x:name="ViewProducts" justifyContentMode="com.vaadin.flow.component.orderedlayout.FlexComponent.JustifyContentMode.CENTER" padding="false" alignItems="com.vaadin.flow.component.orderedlayout.FlexComponent.Alignment.CENTER" defaultHorizontalComponentAlignment="com.vaadin.flow.component.orderedlayout.FlexComponent.Alignment.CENTER" x:route="products">
+<VerticalLayout xmlns:x="http://xml.xdev-software.com/xdevuiml" x:routeLayout="MainContainer" x:name="ViewDynamicValues" padding="false" x:route="viewdynamicvalues">
     <x:constraints zpos="0" width="100%" height="100%" />
     <SplitLayout x:splitterPosition="60.0" x:name="splitLayout">
         <x:constraints width="100%" height="100%" flex-grow="1.0" />
@@ -38,7 +38,11 @@
                         </renderer>
                     </column>
                     <column property="amount" sortable="true" />
-                    <column property="localizedPrice" sortable="true" />
+                    <column property="localizedPrice" sortable="true">
+                        <renderer type="NumberRenderer" nullRepresentation="---">
+                            <numberFormat format="Currency" pattern="" currency="default" locale="default" />
+                        </renderer>
+                    </column>
                 </x:columns>
                 <x:event>selection.selectionChange</x:event>
             </Grid>
@@ -57,7 +61,7 @@
                     <Label x:name="lblProductID" text="{$attribute.productID}">
                         <x:constraints width="0px" label="true" height="0px" />
                     </Label>
-                    <TextField tabIndex="1" x:name="txtProductID">
+                    <TextField x:name="txtProductID">
                         <x:constraints width="100%" height="0px" />
                     </TextField>
                 </FormItem>
@@ -66,7 +70,7 @@
                     <Label x:name="lblProductName" text="{$attribute.productname}">
                         <x:constraints width="0px" label="true" height="0px" />
                     </Label>
-                    <TextField tabIndex="2" x:name="txtProductName">
+                    <TextField x:name="txtProductName">
                         <x:constraints width="100%" height="0px" />
                     </TextField>
                 </FormItem>
@@ -75,7 +79,7 @@
                     <Label x:name="lblManufacturer" text="{$attribute.manufacturer}">
                         <x:constraints width="0px" label="true" height="0px" />
                     </Label>
-                    <TextField tabIndex="3" x:name="txtManufacturer">
+                    <TextField x:name="txtManufacturer">
                         <x:constraints width="100%" height="0px" />
                     </TextField>
                 </FormItem>
@@ -84,7 +88,7 @@
                     <Label x:name="lblCategory" text="{$attribute.category}">
                         <x:constraints width="0px" label="true" height="0px" />
                     </Label>
-                    <ComboBox tabIndex="4" x:name="cmbCategory">
+                    <ComboBox x:name="cmbCategory">
                         <x:typeArguments>
                             <typeArgument type="Category" />
                         </x:typeArguments>
@@ -97,7 +101,7 @@
                     <Label x:name="lblAmount" text="{$attribute.amount}">
                         <x:constraints width="0px" label="true" height="0px" />
                     </Label>
-                    <NumberField tabIndex="5" x:name="nrAmount">
+                    <NumberField x:name="nrAmount">
                         <x:constraints width="100%" height="0px" />
                     </NumberField>
                 </FormItem>
@@ -106,7 +110,7 @@
                     <Label x:name="lblLastAccess" text="{$attribute.lastAccess}">
                         <x:constraints width="0px" label="true" height="0px" />
                     </Label>
-                    <DatePicker tabIndex="6" x:name="dateLastAccess">
+                    <DatePicker x:name="dateLastAccess">
                         <x:constraints width="100%" height="0px" />
                     </DatePicker>
                 </FormItem>

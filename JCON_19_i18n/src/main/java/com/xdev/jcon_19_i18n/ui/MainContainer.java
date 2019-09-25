@@ -22,6 +22,7 @@ import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.dependency.HtmlImport;
+import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
@@ -33,6 +34,7 @@ import com.vaadin.flow.data.renderer.TextRenderer;
 import com.vaadin.flow.router.RouterLayout;
 import com.vaadin.flow.server.InitialPageSettings;
 import com.vaadin.flow.server.PageConfigurator;
+import com.vaadin.flow.server.StreamResource;
 import com.xdev.jcon_19_i18n.i18nUtils.MicroStreamResourceProvider;
 import com.xdev.jcon_19_i18n.microstream.MicroStream;
 import com.xdev.jcon_19_i18n.model.Customer;
@@ -51,11 +53,11 @@ public class MainContainer extends VerticalLayout implements PageConfigurator, R
 	public MainContainer()
 	{
 		super();
-		
+
 		this.initUI();
-		
+
 		this.radioButtonGroup.setItems("Datenbank", "File");
-		
+
 		if(UI.getCurrent().getSession().getAttribute("ResourceProvider") != null)
 		{
 			this.radioButtonGroup.setValue(UI.getCurrent().getSession().getAttribute("ResourceProvider").toString());
@@ -64,29 +66,29 @@ public class MainContainer extends VerticalLayout implements PageConfigurator, R
 		{
 			this.radioButtonGroup.setValue("File");
 		}
-		
+
 		this.cboCustomerChooser.setDataProvider(DataProvider.ofCollection(MicroStream.root().getCustomers()));
-		
+
 		if(UI.getCurrent().getSession().getAttribute(Customer.class) != null)
 		{
 			this.cboCustomerChooser.setValue(UI.getCurrent().getSession().getAttribute(Customer.class));
 		}
 	}
-
+	
 	@Override
 	public void configurePage(final InitialPageSettings settings)
 	{
 		settings.addLink("shortcut icon", "frontend/images/favicon.ico");
 		settings.addFavIcon("icon", "frontend/images/favicon256.png", "256x256");
 	}
-
+	
 	@Override
 	public void showRouterLayoutContent(final HasElement content)
 	{
 		this.contentContainer.removeAll();
 		this.contentContainer.getElement().appendChild(content.getElement());
 	}
-
+	
 	/**
 	 * Event handler delegate method for the {@link Button} {@link #btnView1}.
 	 *
@@ -97,7 +99,7 @@ public class MainContainer extends VerticalLayout implements PageConfigurator, R
 	{
 		UI.getCurrent().navigate(ViewRegister.class);
 	}
-
+	
 	/**
 	 * Event handler delegate method for the {@link Button} {@link #btnView2}.
 	 *
@@ -108,7 +110,7 @@ public class MainContainer extends VerticalLayout implements PageConfigurator, R
 	{
 		UI.getCurrent().navigate(ViewProducts.class);
 	}
-
+	
 	/**
 	 * Event handler delegate method for the {@link Button} {@link #btnView3}.
 	 *
@@ -119,7 +121,7 @@ public class MainContainer extends VerticalLayout implements PageConfigurator, R
 	{
 		Navigation.To(ViewManuallyI18N.class).navigate();
 	}
-
+	
 	/**
 	 * Event handler delegate method for the {@link RadioButtonGroup} {@link #radioButtonGroup}.
 	 *
@@ -139,7 +141,7 @@ public class MainContainer extends VerticalLayout implements PageConfigurator, R
 			StringResourceUtils.setStringResourceProvider(null);
 		}
 	}
-
+	
 	/**
 	 * Event handler delegate method for the {@link Button} {@link #btnView}.
 	 *
@@ -150,7 +152,7 @@ public class MainContainer extends VerticalLayout implements PageConfigurator, R
 	{
 		Navigation.To(ViewTimezones.class).navigate();
 	}
-	
+
 	/**
 	 * Event handler delegate method for the {@link Button} {@link #btnView4}.
 	 *
@@ -158,9 +160,10 @@ public class MainContainer extends VerticalLayout implements PageConfigurator, R
 	 * @eventHandlerDelegate Do NOT delete, used by UI designer!
 	 */
 	private void btnView4_onClick(final ClickEvent<Button> event)
-	{ // UI.getCurrent().navigate("view3");
+	{
+		UI.getCurrent().navigate(ViewRTL.class);
 	}
-	
+
 	/**
 	 * Event handler delegate method for the {@link Button} {@link #btnView5}.
 	 *
@@ -168,9 +171,10 @@ public class MainContainer extends VerticalLayout implements PageConfigurator, R
 	 * @eventHandlerDelegate Do NOT delete, used by UI designer!
 	 */
 	private void btnView5_onClick(final ClickEvent<Button> event)
-	{ // UI.getCurrent().navigate("view3");
+	{
+		UI.getCurrent().navigate(ViewDynamicValues.class);
 	}
-	
+
 	/**
 	 * Event handler delegate method for the {@link Button} {@link #btnView6}.
 	 *
@@ -178,9 +182,10 @@ public class MainContainer extends VerticalLayout implements PageConfigurator, R
 	 * @eventHandlerDelegate Do NOT delete, used by UI designer!
 	 */
 	private void btnView6_onClick(final ClickEvent<Button> event)
-	{ // UI.getCurrent().navigate("view3");
+	{
+		UI.getCurrent().navigate(ViewReport.class);
 	}
-	
+
 	/**
 	 * Event handler delegate method for the {@link Button} {@link #btnView8}.
 	 *
@@ -191,7 +196,7 @@ public class MainContainer extends VerticalLayout implements PageConfigurator, R
 	{
 		UI.getCurrent().navigate(ViewProperties.class);
 	}
-	
+
 	/**
 	 * Event handler delegate method for the {@link ComboBox} {@link #cboCustomerChooser}.
 	 *
@@ -200,21 +205,22 @@ public class MainContainer extends VerticalLayout implements PageConfigurator, R
 	 */
 	private void cboCustomerChooser_valueChanged(final ComponentValueChangeEvent<ComboBox<Customer>, Customer> event)
 	{
-		if(UI.getCurrent().getSession().getAttribute(Locale.class) == null || !event.getValue().getLocale()
-			.equals(UI.getCurrent().getSession().getAttribute(Locale.class).getLanguage()))
+		if(UI.getCurrent().getSession().getAttribute(Locale.class) == null || !event.getValue().getCountry()
+			.equals(UI.getCurrent().getSession().getAttribute(Locale.class).getCountry()))
 		{
 			final Customer value = event.getValue();
 			UI.getCurrent().getSession().setAttribute(Customer.class, value);
-			UI.getCurrent().getSession().setAttribute(Locale.class, new Locale(value.getLocale()));
+			UI.getCurrent().getSession().setAttribute(Locale.class,
+				new Locale(value.getLanguage(), value.getCountry()));
 			UI.getCurrent().getSession().setAttribute(TimeZone.class, TimeZone.getTimeZone(value.getTimeZone()));
-			
+
 			UI.getCurrent().setLocale(UI.getCurrent().getSession().getAttribute(Locale.class));
 			Locale.setDefault(UI.getCurrent().getSession().getAttribute(Locale.class));
-
+			
 			UI.getCurrent().getPage().reload();
 		}
 	}
-
+	
 	/* WARNING: Do NOT edit!<br>The content of this method is always regenerated by the UI designer. */
 	// <generated-code name="initUI">
 	private void initUI()
@@ -236,21 +242,17 @@ public class MainContainer extends VerticalLayout implements PageConfigurator, R
 		this.btnView6               = new Button();
 		this.btnView8               = new Button();
 		this.contentContainer       = new VerticalLayout();
-
+		this.image                  = new Image();
+		
 		this.setSpacing(false);
 		this.setPadding(false);
 		this.setDefaultHorizontalComponentAlignment(FlexComponent.Alignment.STRETCH);
-		this.headerContainer.setClassName("my-header");
 		this.lblHead.setText("Sidebar navigation");
 		this.radioButtonGroup
 			.setRenderer(new TextRenderer<>(ItemLabelGeneratorFactory.NonNull(CaptionUtils::resolveCaption)));
-		this.horizontalLayout.setJustifyContentMode(FlexComponent.JustifyContentMode.END);
 		this.label2.setText("Angemeldeter Customer");
 		this.cboCustomerChooser.setItemLabelGenerator(
 			ItemLabelGeneratorFactory.NonNull(v -> CaptionUtils.resolveCaption(v, "{%firstname} {%lastname}")));
-		this.contentParentContainer.setClassName("my-category");
-		this.contentParentContainer.setMinHeight("0");
-		this.contentParentContainer.setSpacing(false);
 		this.navContainer.setClassName("my-menu");
 		this.navContainer.setMinHeight("0");
 		this.navContainer.setSpacing(false);
@@ -289,7 +291,9 @@ public class MainContainer extends VerticalLayout implements PageConfigurator, R
 		this.contentContainer.setPadding(false);
 		this.contentContainer.getStyle().set("overflow-x", "hidden");
 		this.contentContainer.getStyle().set("overflow-y", "auto");
-
+		this.image.setSrc(new StreamResource("auto.jpg",
+			() -> this.getClass().getClassLoader().getResourceAsStream("frontend/images/auto.jpg")));
+		
 		this.label2.setSizeUndefined();
 		this.cboCustomerChooser.setWidth("300px");
 		this.cboCustomerChooser.setHeightFull();
@@ -313,6 +317,9 @@ public class MainContainer extends VerticalLayout implements PageConfigurator, R
 		this.btnView8.setSizeUndefined();
 		this.navContainer.add(this.btnView1, this.btnView2, this.btnView3, this.btnView, this.btnView4, this.btnView5,
 			this.btnView6, this.btnView8);
+		this.image.setWidth("3936px");
+		this.image.setHeight("2624px");
+		this.contentContainer.add(this.image);
 		this.navContainer.setWidth(null);
 		this.navContainer.setHeightFull();
 		this.contentContainer.setSizeUndefined();
@@ -325,7 +332,7 @@ public class MainContainer extends VerticalLayout implements PageConfigurator, R
 		this.add(this.headerContainer, this.contentParentContainer);
 		this.setFlexGrow(1.0, this.contentParentContainer);
 		this.setSizeFull();
-
+		
 		this.radioButtonGroup.addValueChangeListener(this::radioButtonGroup_valueChanged);
 		this.cboCustomerChooser.addValueChangeListener(this::cboCustomerChooser_valueChanged);
 		this.btnView1.addClickListener(this::btnView1_onClick);
@@ -337,14 +344,15 @@ public class MainContainer extends VerticalLayout implements PageConfigurator, R
 		this.btnView6.addClickListener(this::btnView6_onClick);
 		this.btnView8.addClickListener(this::btnView8_onClick);
 	} // </generated-code>
-	
+
 	// <generated-code name="variables">
 	private Button                   btnView1, btnView2, btnView3, btnView, btnView4, btnView5, btnView6, btnView8;
+	private Image                    image;
 	private ComboBox<Customer>       cboCustomerChooser;
 	private HorizontalLayout         headerContainer, horizontalLayout, contentParentContainer;
 	private VerticalLayout           navContainer, contentContainer;
 	private Label                    lblHead, label2;
 	private RadioButtonGroup<String> radioButtonGroup;
 	// </generated-code>
-
+	
 }

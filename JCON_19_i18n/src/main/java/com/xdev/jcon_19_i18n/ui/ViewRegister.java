@@ -1,12 +1,9 @@
 
 package com.xdev.jcon_19_i18n.ui;
 
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.time.ZoneId;
 import java.util.List;
 import java.util.Locale;
-import java.util.TimeZone;
-import java.util.concurrent.TimeUnit;
 
 import com.rapidclipse.framework.server.resources.CaptionUtils;
 import com.rapidclipse.framework.server.resources.StringResourceUtils;
@@ -55,39 +52,9 @@ public class ViewRegister extends VerticalLayout
 		
 		final List<Customer> customers = MicroStream.root().getCustomers();
 		this.grid.setDataProvider(DataProvider.ofCollection(customers));
-		this.comboBox.setDataProvider(DataProvider.ofItems(Locale.getAvailableLocales()));
-		
-		final ArrayList<TimeZone> tzList = new ArrayList<>();
-		Arrays.asList(TimeZone.getAvailableIDs()).stream().forEach(t -> {
-			tzList.add(TimeZone.getTimeZone(t));
-		});
-		this.comboBox2.setDataProvider(DataProvider.ofCollection(tzList));
-		
-		this.comboBox2.setItemLabelGenerator(
-			ItemLabelGeneratorFactory.NonNull(v -> CaptionUtils.resolveCaption(ViewRegister.displayTimeZone(v))));
-	}
-	
-	private static String displayTimeZone(final TimeZone tz)
-	{
-		
-		final long hours   = TimeUnit.MILLISECONDS.toHours(tz.getRawOffset());
-		long       minutes = TimeUnit.MILLISECONDS.toMinutes(tz.getRawOffset())
-			- TimeUnit.HOURS.toMinutes(hours);
-		// avoid -4:-30 issue
-		minutes = Math.abs(minutes);
-		
-		String result = "";
-		if(hours > 0)
-		{
-			result = String.format("(GMT+%d:%02d) %s", hours, minutes, tz.getID());
-		}
-		else
-		{
-			result = String.format("(GMT%d:%02d) %s", hours, minutes, tz.getID());
-		}
-		
-		return result;
-		
+		this.cboCountry.setDataProvider(DataProvider.ofItems(Locale.getAvailableLocales()));
+		this.cboLanguage.setDataProvider(DataProvider.ofItems(Locale.getAvailableLocales()));
+		this.cboTimezone.setDataProvider(DataProvider.ofCollection(ZoneId.getAvailableZoneIds()));
 	}
 	
 	/**
@@ -101,8 +68,9 @@ public class ViewRegister extends VerticalLayout
 		try
 		{
 			this.binder.writeBean(this.customer);
-			this.customer.setLocale(this.comboBox.getValue().getLanguage());
-			this.customer.setTimeZone(this.comboBox2.getValue().getID());
+			this.customer.setLanguage(this.cboLanguage.getValue().getLanguage());
+			this.customer.setCountry(this.cboCountry.getValue().getCountry());
+			this.customer.setTimeZone(this.cboTimezone.getValue());
 		}
 		catch(final ValidationException e)
 		{
@@ -135,6 +103,9 @@ public class ViewRegister extends VerticalLayout
 			this.customer = event.getFirstSelectedItem().get();
 			this.binder.readBean(this.customer);
 
+			this.cboCountry.setValue(new Locale(this.customer.getCountry()));
+			this.cboLanguage.setValue(new Locale(this.customer.getLanguage()));
+			this.cboTimezone.setValue(ZoneId.of(this.customer.getTimeZone()).getId());
 		}
 	}
 
@@ -154,14 +125,17 @@ public class ViewRegister extends VerticalLayout
 		this.lblLastname     = new Label();
 		this.txtLastname     = new TextField();
 		this.formItem3       = new FormItem();
-		this.comboBox        = new ComboBox<>();
+		this.cboCountry      = new ComboBox<>();
 		this.label           = new Label();
+		this.formItem5       = new FormItem();
+		this.cboLanguage     = new ComboBox<>();
+		this.label3          = new Label();
 		this.formItem4       = new FormItem();
-		this.comboBox2       = new ComboBox<>();
+		this.cboTimezone     = new ComboBox<>();
 		this.label2          = new Label();
 		this.binder          = new Binder<>();
 		this.button          = new Button();
-		
+
 		this.setClassName("my-view my-view3");
 		this.setPadding(false);
 		this.setAlignItems(FlexComponent.Alignment.START);
@@ -171,8 +145,10 @@ public class ViewRegister extends VerticalLayout
 			.setHeader(CaptionUtils.resolveCaption(Customer.class, "firstname")).setSortable(true);
 		this.grid.addColumn(Customer::getLastname).setKey("lastname")
 			.setHeader(CaptionUtils.resolveCaption(Customer.class, "lastname")).setSortable(true);
-		this.grid.addColumn(Customer::getLocale).setKey("locale")
-			.setHeader(CaptionUtils.resolveCaption(Customer.class, "locale")).setSortable(true);
+		this.grid.addColumn(Customer::getCountry).setKey("country")
+			.setHeader(CaptionUtils.resolveCaption(Customer.class, "country")).setSortable(true);
+		this.grid.addColumn(Customer::getLanguage).setKey("language")
+			.setHeader(CaptionUtils.resolveCaption(Customer.class, "language")).setSortable(true);
 		this.grid.addColumn(Customer::getTimeZone).setKey("timeZone")
 			.setHeader(CaptionUtils.resolveCaption(Customer.class, "timeZone")).setSortable(true);
 		this.grid.setSelectionMode(Grid.SelectionMode.SINGLE);
@@ -182,19 +158,20 @@ public class ViewRegister extends VerticalLayout
 			new FormLayout.ResponsiveStep("1000px", 3, FormLayout.ResponsiveStep.LabelsPosition.ASIDE));
 		this.lblFirstname.setText(StringResourceUtils.optLocalizeString("{$lblFirstname.text}", this));
 		this.lblLastname.setText(StringResourceUtils.optLocalizeString("{$lblLastname.text}", this));
-		this.comboBox.setItemLabelGenerator(ItemLabelGeneratorFactory
+		this.cboCountry.setItemLabelGenerator(ItemLabelGeneratorFactory.NonNull(Locale::getDisplayCountry));
+		this.label.setText(StringResourceUtils.optLocalizeString("{$lblCountry.text}", this));
+		this.cboLanguage.setItemLabelGenerator(ItemLabelGeneratorFactory
 			.NonNull(v -> CaptionUtils.resolveCaption(v, "{%displayLanguage} - {%displayCountry}")));
-		this.label.setText(StringResourceUtils.optLocalizeString("{$lblLanguage.text}", this));
-		this.comboBox2.setItemLabelGenerator(
-			ItemLabelGeneratorFactory.NonNull(v -> CaptionUtils.resolveCaption(v, "{%displayName} - {%rawOffset}")));
+		this.label3.setText(StringResourceUtils.optLocalizeString("{$lblLanguage.text}", this));
+		this.cboTimezone.setItemLabelGenerator(ItemLabelGeneratorFactory.NonNull(CaptionUtils::resolveCaption));
 		this.label2.setText(StringResourceUtils.optLocalizeString("{$lblTimezone.text}", this));
 		this.button.setText(StringResourceUtils.optLocalizeString("{$btnSave.text}", this));
-		
+
 		this.binder.forField(this.txtFirstname).withNullRepresentation("").bind(Customer::getFirstname,
 			Customer::setFirstname);
 		this.binder.forField(this.txtLastname).withNullRepresentation("").bind(Customer::getLastname,
 			Customer::setLastname);
-		
+
 		this.grid.setSizeFull();
 		this.verticalLayout2.add(this.grid);
 		this.verticalLayout2.setFlexGrow(1.0, this.grid);
@@ -208,17 +185,22 @@ public class ViewRegister extends VerticalLayout
 		this.txtLastname.setWidthFull();
 		this.txtLastname.setHeight(null);
 		this.formItem2.add(this.lblLastname, this.txtLastname);
-		this.comboBox.setWidthFull();
-		this.comboBox.setHeight(null);
+		this.cboCountry.setWidthFull();
+		this.cboCountry.setHeight(null);
 		this.label.setSizeUndefined();
 		this.label.getElement().setAttribute("slot", "label");
-		this.formItem3.add(this.comboBox, this.label);
-		this.comboBox2.setWidthFull();
-		this.comboBox2.setHeight(null);
+		this.formItem3.add(this.cboCountry, this.label);
+		this.cboLanguage.setWidthFull();
+		this.cboLanguage.setHeight(null);
+		this.label3.setSizeUndefined();
+		this.label3.getElement().setAttribute("slot", "label");
+		this.formItem5.add(this.cboLanguage, this.label3);
+		this.cboTimezone.setWidthFull();
+		this.cboTimezone.setHeight(null);
 		this.label2.setSizeUndefined();
 		this.label2.getElement().setAttribute("slot", "label");
-		this.formItem4.add(this.comboBox2, this.label2);
-		this.form.add(this.formItem, this.formItem2, this.formItem3, this.formItem4);
+		this.formItem4.add(this.cboTimezone, this.label2);
+		this.form.add(this.formItem, this.formItem2, this.formItem3, this.formItem5, this.formItem4);
 		this.form.setWidth(null);
 		this.form.setHeightFull();
 		this.button.setWidthFull();
@@ -232,23 +214,23 @@ public class ViewRegister extends VerticalLayout
 		this.add(this.splitLayout);
 		this.setFlexGrow(1.0, this.splitLayout);
 		this.setSizeFull();
-		
+
 		this.grid.addSelectionListener(this::grid_selectionChange);
 		this.button.addClickListener(this::button_onClick);
 	} // </generated-code>
 	
 	// <generated-code name="variables">
-	private FormLayout         form;
-	private Binder<Customer>   binder;
-	private ComboBox<TimeZone> comboBox2;
-	private Button             button;
-	private Grid<Customer>     grid;
-	private SplitLayout        splitLayout;
-	private VerticalLayout     verticalLayout2, verticalLayout;
-	private Label              lblFirstname, lblLastname, label, label2;
-	private ComboBox<Locale>   comboBox;
-	private TextField          txtFirstname, txtLastname;
-	private FormItem           formItem, formItem2, formItem3, formItem4;
+	private FormLayout       form;
+	private Binder<Customer> binder;
+	private Button           button;
+	private Grid<Customer>   grid;
+	private SplitLayout      splitLayout;
+	private VerticalLayout   verticalLayout2, verticalLayout;
+	private Label            lblFirstname, lblLastname, label, label3, label2;
+	private ComboBox<Locale> cboCountry, cboLanguage;
+	private TextField        txtFirstname, txtLastname;
+	private FormItem         formItem, formItem2, formItem3, formItem5, formItem4;
+	private ComboBox<String> cboTimezone;
 	// </generated-code>
 	
 }

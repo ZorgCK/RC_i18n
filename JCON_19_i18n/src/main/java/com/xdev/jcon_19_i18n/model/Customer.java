@@ -8,7 +8,8 @@ public class Customer
 {
 	private String firstname;
 	private String lastname;
-	private String locale;
+	private String language;
+	private String country;
 	private String timeZone;
 	
 	public Customer()
@@ -16,12 +17,12 @@ public class Customer
 		super();
 	}
 	
-	public Customer(final String firstname, final String lastname, final String locale, final String timeZone)
+	public Customer(final String firstname, final String lastname, final String language, final String timeZone)
 	{
 		super();
 		this.firstname = firstname;
 		this.lastname  = lastname;
-		this.locale    = locale;
+		this.language  = language;
 		this.timeZone  = timeZone;
 	}
 
@@ -48,14 +49,14 @@ public class Customer
 	}
 	
 	@Caption("{$attribute.language}")
-	public String getLocale()
+	public String getLanguage()
 	{
-		return this.locale;
+		return this.language;
 	}
 
-	public void setLocale(final String locale)
+	public void setLanguage(final String language)
 	{
-		this.locale = locale;
+		this.language = language;
 	}
 	
 	@Caption("{$attribute.timezone}")
@@ -67,6 +68,17 @@ public class Customer
 	public void setTimeZone(final String timeZone)
 	{
 		this.timeZone = timeZone;
+	}
+	
+	@Caption("{$attribute.country}")
+	public String getCountry()
+	{
+		return this.country;
+	}
+	
+	public void setCountry(final String country)
+	{
+		this.country = country;
 	}
 
 }

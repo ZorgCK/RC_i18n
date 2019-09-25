@@ -54,7 +54,7 @@
 		<dependency>
 			<groupId>com.rapidclipse</groupId>
 			<artifactId>rap-server-core</artifactId>
-			<version>10.00.00-RAP-RC2-SNAPSHOT</version>
+			<version>10.00.00-RAP-GA</version>
 		</dependency>
 		<dependency>
 			<groupId>one.microstream</groupId>
@@ -66,10 +66,22 @@
 			<artifactId>storage.embedded.configuration</artifactId>
 			<version>01.00.00-MS-RC4</version>
 		</dependency>
-				<dependency>
+		<dependency>
 			<groupId>com.rapidclipse</groupId>
 			<artifactId>rap-server-persistence-jpa</artifactId>
-			<version>10.00.00-RAP-RC2-SNAPSHOT</version>
+			<version>10.00.00-RAP-GA</version>
+		</dependency>
+		<dependency>
+			<groupId>com.rapidclipse</groupId>
+			<artifactId>rap-server-reports</artifactId>
+			<version>10.00.00-RAP-GA</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.ant</groupId>
+			<artifactId>ant</artifactId>
+			<version>1.7.1</version>
+			<scope>compile</scope>
+			<optional>true</optional>
 		</dependency>
 	</dependencies>
 	<properties>

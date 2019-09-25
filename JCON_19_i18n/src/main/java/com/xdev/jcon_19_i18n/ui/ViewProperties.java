@@ -53,26 +53,38 @@ public class ViewProperties extends VerticalLayout
 		final Product product =
 			new Product("1", "Milch", "Bauern AG", new BigDecimal(1300), LocalDateTime.now().minusDays(4),
 				MicroStream.root().getCategories().get(4));
+		product.setPrice("en", new BigDecimal(100));
+		product.setPrice("de", new BigDecimal(120));
 		
 		final Product product2 =
 			new Product("2", "Rindfleisch", "Bauern AG", new BigDecimal(100), LocalDateTime.now().minusDays(2),
 				MicroStream.root().getCategories().get(3));
+		product2.setPrice("en", new BigDecimal(500));
+		product2.setPrice("de", new BigDecimal(520));
 		
 		final Product product3 =
 			new Product("3", "Apfel", "Obst AG", new BigDecimal(400), LocalDateTime.now().minusDays(1),
 				MicroStream.root().getCategories().get(1));
+		product3.setPrice("en", new BigDecimal(300));
+		product3.setPrice("de", new BigDecimal(320));
 		
 		final Product product4 =
 			new Product("4", "Spargel", "Gemüse AG", new BigDecimal(500), LocalDateTime.now().minusDays(3),
 				MicroStream.root().getCategories().get(0));
+		product4.setPrice("en", new BigDecimal(600));
+		product4.setPrice("de", new BigDecimal(620));
 		
 		final Product product5 =
 			new Product("5", "Brötchen", "Bäcker AG", new BigDecimal(40), LocalDateTime.now().minusDays(7),
 				MicroStream.root().getCategories().get(2));
+		product5.setPrice("en", new BigDecimal(200));
+		product5.setPrice("de", new BigDecimal(220));
 		
 		final Product product6 =
 			new Product("6", "Banane", "Obst AG", new BigDecimal(200), LocalDateTime.now().minusDays(10),
 				MicroStream.root().getCategories().get(1));
+		product6.setPrice("en", new BigDecimal(100));
+		product6.setPrice("de", new BigDecimal(120));
 		
 		MicroStream.root().getProducts().clear();
 		MicroStream.root().getProducts().addAll(Arrays.asList(product, product2, product3, product4, product5));
@@ -154,9 +166,9 @@ public class ViewProperties extends VerticalLayout
 		i184.setLocalizedValue("en", "Timezone");
 		i184.setLocalizedValue("de", "Zeitzone");
 
-		final I18NResource i185 = new I18NResource("attribute.firstname");
-		i185.setLocalizedValue("en", "Firstname");
-		i185.setLocalizedValue("de", "Vorname");
+		final I18NResource i185 = new I18NResource("attribute.country");
+		i185.setLocalizedValue("en", "Country");
+		i185.setLocalizedValue("de", "Land");
 
 		final I18NResource i186 = new I18NResource("attribute.manufacturer");
 		i186.setLocalizedValue("en", "Manufacturer");
@@ -182,9 +194,9 @@ public class ViewProperties extends VerticalLayout
 		i1811.setLocalizedValue("en", "Category");
 		i1811.setLocalizedValue("de", "Kategorie");
 
-		final I18NResource i1812 = new I18NResource("lblFirstname.text");
-		i1812.setLocalizedValue("en", "Firstname");
-		i1812.setLocalizedValue("de", "Vorname");
+		final I18NResource i1812 = new I18NResource("attribute.price");
+		i1812.setLocalizedValue("en", "Price");
+		i1812.setLocalizedValue("de", "Preis");
 		
 		final I18NResource i1813 = new I18NResource("lblLastname.text");
 		i1813.setLocalizedValue("en", "Lastname");
@@ -198,14 +210,26 @@ public class ViewProperties extends VerticalLayout
 		i1815.setLocalizedValue("en", "Timezone");
 		i1815.setLocalizedValue("de", "Zeitzone");
 		
-		final I18NResource i1816 = new I18NResource("btnSave.text");
+		final I18NResource i1816 = new I18NResource("lblFirstname.text");
+		i1816.setLocalizedValue("en", "Firstname");
+		i1816.setLocalizedValue("de", "Vorname");
+
+		final I18NResource i1817 = new I18NResource("lblCountry.text");
+		i1816.setLocalizedValue("en", "Country");
+		i1816.setLocalizedValue("de", "Land");
+		
+		final I18NResource i1818 = new I18NResource("btnSave.text");
 		i1816.setLocalizedValue("en", "Save");
 		i1816.setLocalizedValue("de", "Speichern");
+		
+		final I18NResource i1819 = new I18NResource("message.warning.delete");
+		i1816.setLocalizedValue("en", "Are u sure to delete this data?");
+		i1816.setLocalizedValue("de", "Wollen Sie diesen Datensatz tatsächlich löschen?");
 
 		MicroStream.root().getResources().clear();
 		MicroStream.root().getResources()
 			.addAll(Arrays.asList(i18, i182, i183, i184, i185, i186, i187, i188, i189, i1810, i1811, i1812, i1813,
-				i1814, i1815, i1816));
+				i1814, i1815, i1816, i1817, i1818, i1819));
 		MicroStream.storageManager().store(MicroStream.root().getResources());
 		
 	}

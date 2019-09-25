@@ -4,6 +4,7 @@
 <?template BROWSER_WUXGA?>
 <?import com.vaadin.flow.component.button.Button?>
 <?import com.vaadin.flow.component.combobox.ComboBox?>
+<?import com.vaadin.flow.component.html.Image?>
 <?import com.vaadin.flow.component.html.Label?>
 <?import com.vaadin.flow.component.orderedlayout.HorizontalLayout?>
 <?import com.vaadin.flow.component.orderedlayout.VerticalLayout?>
@@ -12,7 +13,7 @@
 <?import java.lang.String?>
 <VerticalLayout xmlns:x="http://xml.xdev-software.com/xdevuiml" spacing="false" x:name="MainContainer" padding="false" defaultHorizontalComponentAlignment="com.vaadin.flow.component.orderedlayout.FlexComponent.Alignment.STRETCH" x:routerLayout="true">
     <x:constraints zpos="0" width="100%" height="100%" />
-    <HorizontalLayout className="my-header" x:name="headerContainer">
+    <HorizontalLayout x:name="headerContainer">
         <x:constraints width="100%" height="-1px" flex-grow="0.0" />
         <Label x:name="lblHead" text="Sidebar navigation">
             <x:constraints width="0px" alignment="CENTER" height="0px" flex-grow="0.0" />
@@ -24,7 +25,7 @@
             <x:constraints width="0px" alignment="CENTER" height="0px" flex-grow="0.0" />
             <x:event>valueChange.valueChanged</x:event>
         </RadioButtonGroup>
-        <HorizontalLayout x:name="horizontalLayout" justifyContentMode="com.vaadin.flow.component.orderedlayout.FlexComponent.JustifyContentMode.END">
+        <HorizontalLayout x:name="horizontalLayout">
             <x:constraints width="100px" alignment="CENTER" height="-1px" flex-grow="1.0" />
             <Label x:name="label2" text="Angemeldeter Customer">
                 <x:constraints width="0px" height="0px" flex-grow="0.0" />
@@ -39,7 +40,7 @@
             </ComboBox>
         </HorizontalLayout>
     </HorizontalLayout>
-    <HorizontalLayout className="my-category" minHeight="0" spacing="false" x:name="contentParentContainer">
+    <HorizontalLayout x:name="contentParentContainer">
         <x:constraints width="-1px" height="-1px" flex-grow="1.0" />
         <VerticalLayout className="my-menu" minHeight="0" spacing="false" x:name="navContainer" x:scrollbars="com.rapidclipse.vaadin.editor.model.ScrollbarsPolicy.VERTICAL" padding="false" minWidth="250px" defaultHorizontalComponentAlignment="com.vaadin.flow.component.orderedlayout.FlexComponent.Alignment.STRETCH">
             <x:constraints width="-1px" height="100%" flex-grow="0.0" />
@@ -86,6 +87,9 @@
         </VerticalLayout>
         <VerticalLayout className="my-view" minHeight="0" spacing="false" x:name="contentContainer" x:scrollbars="com.rapidclipse.vaadin.editor.model.ScrollbarsPolicy.VERTICAL" padding="false">
             <x:constraints width="-1px" alignment="STRETCH" height="-1px" flex-grow="0.0" />
+            <Image x:src="src/main/webapp/frontend/images/auto.jpg" x:name="image">
+                <x:constraints width="3936px" height="2624px" flex-grow="0.0" />
+            </Image>
         </VerticalLayout>
     </HorizontalLayout>
 </VerticalLayout>
