@@ -22,7 +22,6 @@ import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.dependency.HtmlImport;
-import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
@@ -34,7 +33,6 @@ import com.vaadin.flow.data.renderer.TextRenderer;
 import com.vaadin.flow.router.RouterLayout;
 import com.vaadin.flow.server.InitialPageSettings;
 import com.vaadin.flow.server.PageConfigurator;
-import com.vaadin.flow.server.StreamResource;
 import com.xdev.jcon_19_i18n.i18nUtils.MicroStreamResourceProvider;
 import com.xdev.jcon_19_i18n.microstream.MicroStream;
 import com.xdev.jcon_19_i18n.model.Customer;
@@ -242,8 +240,7 @@ public class MainContainer extends VerticalLayout implements PageConfigurator, R
 		this.btnView6               = new Button();
 		this.btnView8               = new Button();
 		this.contentContainer       = new VerticalLayout();
-		this.image                  = new Image();
-		
+
 		this.setSpacing(false);
 		this.setPadding(false);
 		this.setDefaultHorizontalComponentAlignment(FlexComponent.Alignment.STRETCH);
@@ -291,13 +288,12 @@ public class MainContainer extends VerticalLayout implements PageConfigurator, R
 		this.contentContainer.setPadding(false);
 		this.contentContainer.getStyle().set("overflow-x", "hidden");
 		this.contentContainer.getStyle().set("overflow-y", "auto");
-		this.image.setSrc(new StreamResource("auto.jpg",
-			() -> this.getClass().getClassLoader().getResourceAsStream("frontend/images/auto.jpg")));
-		
+
 		this.label2.setSizeUndefined();
 		this.cboCustomerChooser.setWidth("300px");
 		this.cboCustomerChooser.setHeightFull();
 		this.horizontalLayout.add(this.label2, this.cboCustomerChooser);
+		this.horizontalLayout.setVerticalComponentAlignment(FlexComponent.Alignment.CENTER, this.label2);
 		this.horizontalLayout.setVerticalComponentAlignment(FlexComponent.Alignment.CENTER, this.cboCustomerChooser);
 		this.lblHead.setSizeUndefined();
 		this.horizontalLayout.setWidth("100px");
@@ -317,9 +313,6 @@ public class MainContainer extends VerticalLayout implements PageConfigurator, R
 		this.btnView8.setSizeUndefined();
 		this.navContainer.add(this.btnView1, this.btnView2, this.btnView3, this.btnView, this.btnView4, this.btnView5,
 			this.btnView6, this.btnView8);
-		this.image.setWidth("3936px");
-		this.image.setHeight("2624px");
-		this.contentContainer.add(this.image);
 		this.navContainer.setWidth(null);
 		this.navContainer.setHeightFull();
 		this.contentContainer.setSizeUndefined();
@@ -332,7 +325,7 @@ public class MainContainer extends VerticalLayout implements PageConfigurator, R
 		this.add(this.headerContainer, this.contentParentContainer);
 		this.setFlexGrow(1.0, this.contentParentContainer);
 		this.setSizeFull();
-		
+
 		this.radioButtonGroup.addValueChangeListener(this::radioButtonGroup_valueChanged);
 		this.cboCustomerChooser.addValueChangeListener(this::cboCustomerChooser_valueChanged);
 		this.btnView1.addClickListener(this::btnView1_onClick);
@@ -347,7 +340,6 @@ public class MainContainer extends VerticalLayout implements PageConfigurator, R
 
 	// <generated-code name="variables">
 	private Button                   btnView1, btnView2, btnView3, btnView, btnView4, btnView5, btnView6, btnView8;
-	private Image                    image;
 	private ComboBox<Customer>       cboCustomerChooser;
 	private HorizontalLayout         headerContainer, horizontalLayout, contentParentContainer;
 	private VerticalLayout           navContainer, contentContainer;

@@ -4,7 +4,6 @@
 <?template BROWSER_WUXGA?>
 <?import com.vaadin.flow.component.button.Button?>
 <?import com.vaadin.flow.component.combobox.ComboBox?>
-<?import com.vaadin.flow.component.html.Image?>
 <?import com.vaadin.flow.component.html.Label?>
 <?import com.vaadin.flow.component.orderedlayout.HorizontalLayout?>
 <?import com.vaadin.flow.component.orderedlayout.VerticalLayout?>
@@ -28,7 +27,7 @@
         <HorizontalLayout x:name="horizontalLayout">
             <x:constraints width="100px" alignment="CENTER" height="-1px" flex-grow="1.0" />
             <Label x:name="label2" text="Angemeldeter Customer">
-                <x:constraints width="0px" height="0px" flex-grow="0.0" />
+                <x:constraints width="0px" alignment="CENTER" height="0px" flex-grow="0.0" />
             </Label>
             <ComboBox x:name="cboCustomerChooser">
                 <x:typeArguments>
@@ -87,9 +86,6 @@
         </VerticalLayout>
         <VerticalLayout className="my-view" minHeight="0" spacing="false" x:name="contentContainer" x:scrollbars="com.rapidclipse.vaadin.editor.model.ScrollbarsPolicy.VERTICAL" padding="false">
             <x:constraints width="-1px" alignment="STRETCH" height="-1px" flex-grow="0.0" />
-            <Image x:src="src/main/webapp/frontend/images/auto.jpg" x:name="image">
-                <x:constraints width="3936px" height="2624px" flex-grow="0.0" />
-            </Image>
         </VerticalLayout>
     </HorizontalLayout>
 </VerticalLayout>

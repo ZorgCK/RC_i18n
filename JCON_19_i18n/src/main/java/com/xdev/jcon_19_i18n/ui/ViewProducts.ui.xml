@@ -38,7 +38,11 @@
                         </renderer>
                     </column>
                     <column property="amount" sortable="true" />
-                    <column property="localizedPrice" sortable="true" />
+                    <column property="localizedPrice" sortable="true">
+                        <renderer type="NumberRenderer" nullRepresentation="">
+                            <numberFormat format="Currency" pattern="" currency="default" locale="default" />
+                        </renderer>
+                    </column>
                 </x:columns>
                 <x:event>selection.selectionChange</x:event>
             </Grid>
