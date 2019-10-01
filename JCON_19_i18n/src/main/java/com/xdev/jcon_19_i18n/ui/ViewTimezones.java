@@ -17,6 +17,7 @@ import com.vaadin.flow.component.ComponentEventListener;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.H2;
+import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -50,7 +51,7 @@ public class ViewTimezones extends VerticalLayout
 		this.label2.setText(this.now.toString());
 		this.label4.setText(LocalDateTime.now().toString());
 		this.label6.setText(ZonedDateTime.now().toString());
-
+		
 		this.h2.setVisible(false);
 	}
 
@@ -91,18 +92,18 @@ public class ViewTimezones extends VerticalLayout
 		this.horizontalLayout  = new HorizontalLayout();
 		this.label             = new Label();
 		this.label2            = new Label();
-		this.label7            = new Label();
+		this.label7            = new H3();
 		this.horizontalLayout2 = new HorizontalLayout();
 		this.label3            = new Label();
 		this.label4            = new Label();
-		this.label8            = new Label();
+		this.label8            = new H3();
 		this.horizontalLayout3 = new HorizontalLayout();
 		this.label5            = new Label();
 		this.label6            = new Label();
-		this.label9            = new Label();
+		this.label9            = new H3();
 		this.button            = new Button();
 		this.h2                = new H2();
-		
+
 		this.setClassName("my-view my-view3");
 		this.grid.addColumn(ZoneId::getId).setKey("id").setHeader(CaptionUtils.resolveCaption(ZoneId.class, "id"))
 			.setSortable(true);
@@ -111,7 +112,7 @@ public class ViewTimezones extends VerticalLayout
 			.setKey("rules.fixedOffset").setHeader(CaptionUtils.resolveCaption(ZoneId.class, "rules.fixedOffset"))
 			.setSortable(true);
 		this.grid.setSelectionMode(Grid.SelectionMode.SINGLE);
-		this.label.setText("INSTAND");
+		this.label.setText("INSTANT");
 		this.label2.setText("Label");
 		this.label7.setText("Wird immer verwendet, wenn Werte in der Storage abgelegt werden.");
 		this.label3.setText("LocalDateTime");
@@ -122,7 +123,7 @@ public class ViewTimezones extends VerticalLayout
 		this.label9.setText("Verwendung im Rendering mit Timezone relvanz.");
 		this.button.setText("Anzeigen");
 		this.h2.setText("H2");
-		
+
 		this.grid.setSizeFull();
 		this.verticalLayout.add(this.grid);
 		this.verticalLayout.setFlexGrow(1.0, this.grid);
@@ -158,7 +159,7 @@ public class ViewTimezones extends VerticalLayout
 		this.add(this.splitLayout);
 		this.setFlexGrow(1.0, this.splitLayout);
 		this.setSizeFull();
-		
+
 		this.grid.addSelectionListener(this::grid_selectionChange);
 		this.button.addClickListener(this::button_onClick);
 	} // </generated-code>
@@ -169,7 +170,8 @@ public class ViewTimezones extends VerticalLayout
 	private VerticalLayout   verticalLayout, verticalLayout2;
 	private HorizontalLayout horizontalLayout, horizontalLayout2, horizontalLayout3;
 	private Grid<ZoneId>     grid;
-	private Label            label, label2, label7, label3, label4, label8, label5, label6, label9;
+	private Label            label, label2, label3, label4, label5, label6;
+	private H3               label7, label8, label9;
 	private H2               h2;
 	// </generated-code>
 	
