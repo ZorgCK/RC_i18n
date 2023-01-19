@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.time.Month;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
+import java.util.Arrays;
 import java.util.Optional;
 
 import com.rapidclipse.framework.server.data.converter.ConverterBuilder;
@@ -12,6 +13,8 @@ import com.rapidclipse.framework.server.data.format.NumberFormatBuilder;
 import com.rapidclipse.framework.server.resources.CaptionUtils;
 import com.rapidclipse.framework.server.resources.StringResourceUtils;
 import com.rapidclipse.framework.server.ui.ItemLabelGeneratorFactory;
+import com.rapidclipse.framework.server.ui.filter.FilterComponent;
+import com.rapidclipse.framework.server.ui.filter.GridFilterSubjectFactory;
 import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.datepicker.DatePicker;
 import com.vaadin.flow.component.formlayout.FormLayout;
@@ -40,7 +43,7 @@ public class ViewProducts extends VerticalLayout
 {
 	
 	private Product product;
-
+	
 	/**
 	 *
 	 */
@@ -50,9 +53,8 @@ public class ViewProducts extends VerticalLayout
 		this.initUI();
 		
 		this.grid.setDataProvider(DataProvider.ofCollection(MicroStream.root().getProducts()));
-
 		this.cmbCategory.setDataProvider(DataProvider.ofCollection(MicroStream.root().getCategories()));
-		
+		this.filterComponent.connectWith(this.grid);
 	}
 	
 	/**
@@ -76,6 +78,7 @@ public class ViewProducts extends VerticalLayout
 	{
 		this.splitLayout     = new SplitLayout();
 		this.verticalLayout2 = new VerticalLayout();
+		this.filterComponent = new FilterComponent();
 		this.grid            = new Grid<>(Product.class, false);
 		this.verticalLayout  = new VerticalLayout();
 		this.form            = new FormLayout();
@@ -102,7 +105,6 @@ public class ViewProducts extends VerticalLayout
 		this.setClassName("my-view my-view3");
 		this.setJustifyContentMode(FlexComponent.JustifyContentMode.CENTER);
 		this.setPadding(false);
-		this.setAlignItems(FlexComponent.Alignment.CENTER);
 		this.setDefaultHorizontalComponentAlignment(FlexComponent.Alignment.CENTER);
 		this.grid.addColumn(Product::getProductID).setKey("productID")
 			.setHeader(CaptionUtils.resolveCaption(Product.class, "productID")).setSortable(true);
@@ -157,14 +159,17 @@ public class ViewProducts extends VerticalLayout
 			.withConverter(ConverterBuilder.LocalDateToLocalDateTime().build())
 			.bind(Product::getLastAccess, Product::setLastAccess);
 
+		this.filterComponent.connectWith(this.grid.getDataProvider());
+		this.filterComponent.setFilterSubject(GridFilterSubjectFactory.CreateFilterSubject(this.grid,
+			Arrays.asList("productID", "productName", "category.localizedValue", "manufacturer"),
+			Arrays.asList("productID",
+				"productName", "category.localizedValue", "manufacturer", "lastAccess", "amount", "localizedPrice")));
+
+		this.filterComponent.setWidthFull();
+		this.filterComponent.setHeight(null);
 		this.grid.setSizeFull();
-		this.verticalLayout2.add(this.grid);
+		this.verticalLayout2.add(this.filterComponent, this.grid);
 		this.verticalLayout2.setFlexGrow(1.0, this.grid);
-		this.lblProductID.setSizeUndefined();
-		this.lblProductID.getElement().setAttribute("slot", "label");
-		this.txtProductID.setWidthFull();
-		this.txtProductID.setHeight(null);
-		this.formItem.add(this.lblProductID, this.txtProductID);
 		this.lblProductName.setSizeUndefined();
 		this.lblProductName.getElement().setAttribute("slot", "label");
 		this.txtProductName.setWidthFull();
@@ -203,7 +208,7 @@ public class ViewProducts extends VerticalLayout
 
 		this.grid.addSelectionListener(this::grid_selectionChange);
 	} // </generated-code>
-
+	
 	// <generated-code name="variables">
 	private FormLayout         form;
 	private SplitLayout        splitLayout;
@@ -212,6 +217,7 @@ public class ViewProducts extends VerticalLayout
 	private VerticalLayout     verticalLayout2, verticalLayout;
 	private Label              lblProductID, lblProductName, lblManufacturer, lblCategory, lblAmount, lblLastAccess;
 	private Binder<Product>    binder;
+	private FilterComponent    filterComponent;
 	private Grid<Product>      grid;
 	private TextField          txtProductID, txtProductName, txtManufacturer;
 	private FormItem           formItem, formItem2, formItem3, formItem4, formItem5, formItem6;

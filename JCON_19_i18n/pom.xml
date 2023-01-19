@@ -15,17 +15,32 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.8.0</version>
 				<configuration>
-					<source>1.8</source>
-					<target>1.8</target>
+					<source>11</source>
+					<target>11</target>
 				</configuration>
 			</plugin>
 			<plugin>
 				<artifactId>maven-war-plugin</artifactId>
-				<version>3.2.2</version>
+				<version>3.3.1</version>
 				<configuration>
 					<warName>${project.name}</warName>
 					<failOnMissingWebXml>false</failOnMissingWebXml>
 				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>com.vaadin</groupId>
+				<artifactId>vaadin-maven-plugin</artifactId>
+				<version>14.8.14</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>prepare-frontend</goal>
+						</goals>
+						<configuration>
+							<pnpmEnable>true</pnpmEnable>
+						</configuration>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>
@@ -54,7 +69,7 @@
 		<dependency>
 			<groupId>com.rapidclipse</groupId>
 			<artifactId>rap-server-core</artifactId>
-			<version>10.00.00-RAP-GA</version>
+			<version>11.00.00-RAP-GA</version>
 		</dependency>
 		<dependency>
 			<groupId>one.microstream</groupId>
@@ -69,12 +84,12 @@
 		<dependency>
 			<groupId>com.rapidclipse</groupId>
 			<artifactId>rap-server-persistence-jpa</artifactId>
-			<version>10.00.00-RAP-GA</version>
+			<version>11.00.00-RAP-GA</version>
 		</dependency>
 		<dependency>
 			<groupId>com.rapidclipse</groupId>
 			<artifactId>rap-server-reports</artifactId>
-			<version>10.00.00-RAP-GA</version>
+			<version>11.00.00-RAP-GA</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.ant</groupId>
@@ -89,4 +104,32 @@
 			UTF-8
 		</project.build.sourceEncoding>
 	</properties>
+	<profiles>
+		<profile>
+			<id>production</id>
+			<properties>
+				<vaadin.productionMode>true</vaadin.productionMode>
+			</properties>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>com.vaadin</groupId>
+						<artifactId>vaadin-maven-plugin</artifactId>
+						<version>14.8.14</version>
+						<executions>
+							<execution>
+								<goals>
+									<goal>build-frontend</goal>
+								</goals>
+								<phase>compile</phase>
+								<configuration>
+									<pnpmEnable>true</pnpmEnable>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
 </project>

@@ -21,7 +21,6 @@ import com.vaadin.flow.component.HasValue;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.combobox.ComboBox;
-import com.vaadin.flow.component.dependency.HtmlImport;
 import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
@@ -33,16 +32,13 @@ import com.vaadin.flow.data.renderer.TextRenderer;
 import com.vaadin.flow.router.RouterLayout;
 import com.vaadin.flow.server.InitialPageSettings;
 import com.vaadin.flow.server.PageConfigurator;
+import com.vaadin.flow.theme.Theme;
 import com.xdev.jcon_19_i18n.i18nUtils.MicroStreamResourceProvider;
 import com.xdev.jcon_19_i18n.microstream.MicroStream;
 import com.xdev.jcon_19_i18n.model.Customer;
 
 
-/**
- *
- */
-// @StyleSheet("frontend://styles/shared-styles.css")
-@HtmlImport("frontend://styles/shared-styles.html")
+@Theme(themeFolder = "default")
 public class MainContainer extends VerticalLayout implements PageConfigurator, RouterLayout
 {
 	/**

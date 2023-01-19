@@ -1,1 +1,17 @@
+target/
+node_modules/
+frontend/generated/
+
+package.json
+pnpmfile.js
+pnpm-lock.yaml
+webpack.config.js
+webpack.generated.js
+
+src/main/resources/rebel.xml
+.settings/
+
+.classpath
+.project
 /target/
+bin/
